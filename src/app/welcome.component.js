@@ -18,6 +18,7 @@ var WelcomeComponent = (function () {
         this.router = router;
         this.route.params.subscribe(function (param) {
             if (param['client']) {
+                _this.client = param['client'];
             }
             else {
                 _this.router.navigate(['**']);
@@ -32,7 +33,8 @@ var WelcomeComponent = (function () {
 WelcomeComponent = __decorate([
     core_1.Component({
         selector: "welcome",
-        template: "\n        <div>\n        {{value | json}}\n    </div>\n    <div>\n        {{accesstoken}}\n    </div>\n    <div>\n        <button md-raised-button (click)=\"gotoForm()\"> Log In with Form </button>\n        <button md-raised-button (click)=\"loginWithFacebook()\"> Log In with Facebook </button>\n        <button md-raised-button (click)=\"loginWithFacebook()\"> Log In with Instagram </button>\n    </div>\n    "
+        templateUrl: "welcome.component.html",
+        styleUrls: ['./welcome.component.css']
     }),
     __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
 ], WelcomeComponent);

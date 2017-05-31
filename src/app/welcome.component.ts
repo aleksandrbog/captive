@@ -2,25 +2,15 @@ import {Component} from "@angular/core";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 @Component({
     selector:"welcome",
-    template:`
-        <div>
-        {{value | json}}
-    </div>
-    <div>
-        {{accesstoken}}
-    </div>
-    <div>
-        <button md-raised-button (click)="gotoForm()"> Log In with Form </button>
-        <button md-raised-button (click)="loginWithFacebook()"> Log In with Facebook </button>
-        <button md-raised-button (click)="loginWithFacebook()"> Log In with Instagram </button>
-    </div>
-    `
+    templateUrl:"welcome.component.html",
+    styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent{
+    private client:string;
     constructor(private route : ActivatedRoute,private router:Router){
         this.route.params.subscribe((param:Params)=>{
             if(param['client']){
-
+                this.client = param['client'];
             }else{
                 this.router.navigate(['**']);
             }

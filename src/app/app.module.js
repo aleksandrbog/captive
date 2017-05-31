@@ -10,6 +10,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var app_component_1 = require("./app.component");
 var ngx_facebook_1 = require("ngx-facebook");
+var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var register_form_1 = require("./form/register.form");
 var material_module_1 = require("./material.module");
@@ -24,15 +25,16 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [
             platform_browser_1.BrowserModule,
+            forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
                 {
-                    path: 'welcome/:client', component: welcome_component_1.WelcomeComponent,
+                    path: ':client/welcome', component: welcome_component_1.WelcomeComponent,
+                },
+                {
+                    path: ':client/form', component: register_form_1.RegisterFormComponent,
                 },
                 {
                     path: '**', component: page_not_found_component_1.PageNotFoundComponent,
-                },
-                {
-                    path: 'welcome/:client/form', component: register_form_1.RegisterFormComponent,
                 },
             ]),
             ngx_facebook_1.FacebookModule.forRoot(),
