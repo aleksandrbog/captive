@@ -11,80 +11,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 require("../assets/css/styles.css");
-var ngx_facebook_1 = require("ngx-facebook");
 var router_1 = require("@angular/router");
+var http_service_1 = require("./service/http.service");
+var captive_store_1 = require("./service/captive.store");
 var AppComponent = (function () {
-    function AppComponent(fb, route) {
-        var _this = this;
-        this.fb = fb;
+    function AppComponent(route, router, httpService, captiveStore) {
         this.route = route;
-        this.value = "none";
-        this.accesstoken = "none";
-        this.code = "none";
-        /* Facebook init params */
-        var initParams = {
-            appId: '387281471607035',
-            xfbml: true,
-            status: true,
-            version: 'v2.8'
-        };
-        fb.init(initParams);
-        fb.getLoginStatus().then(function (value) { _this.value = value; console.log(value); }).catch(function (error) { return _this.value = error; });
-        window.FB.XFBML.parse();
+        this.router = router;
+        this.httpService = httpService;
+        this.captiveStore = captiveStore;
+        this.client = window.location.pathname.split("/")[1].trim();
+        this.resolution = window.screen.availHeight + 'x' + window.screen.availWidth;
         this.route.queryParams.subscribe(function (params) {
             console.log(params);
         });
-        this.route.fragment.subscribe(function (fragment) {
-            if (fragment) {
-                console.log("My hash fragment is here => ", fragment);
-                _this.accesstoken = fragment.split("&")[0].split('=')[1];
-            }
-        });
+        this.postClientInfo();
     }
     AppComponent.prototype.ngOnInit = function () {
     };
-    /*Login with facebook method*/
-    AppComponent.prototype.loginWithFacebook = function () {
-        window.location.href = encodeURI("https://www.facebook.com/dialog/oauth?client_id=387281471607035&redirect_uri=http://unity-wifi.net:8081/?client=33&mac=00:00:00&response_type=token&scope=publish_actions&display=touch");
+    AppComponent.prototype.postClientInfo = function () {
+        this.resolution = window.screen.availHeight + 'x' + window.screen.availWidth;
+        console.log(window.screen.availHeight + ' ' + window.screen.availWidth);
+        console.log(navigator.userAgent);
     };
-    /*Login with facebook method facebook*/
-    AppComponent.prototype.loginWithFacebookFB = function () {
-        var options = {
-            scope: 'public_profile,email',
-            return_scopes: true,
-            display: 'touch',
-            redirect_uri: 'http://unity-wifi.net:8081/?client=33&mac=00:00:00',
-        };
-        this.fb.login(options)
-            .then(function (response) { return console.log(response); })
-            .catch(function (error) { return console.error(error); });
-        try {
-            if (!window.opener.postMessage) {
-                throw "postMessageUnsupported";
-            }
-            if (navigator.userAgent.indexOf("Trident") !== -1) {
-                throw "postMessageBrokenInIE";
-            }
-            var message = "FB_POPUP:" + JSON.stringify({
-                reload: "<url>"
-            });
-            window.opener.postMessage(message, "https:\/\/www.facebook.com");
-        }
-        catch (e) {
-            document.domain = 'facebook.com';
-            if (!window.opener.closed) {
-                window.opener.location.replace("<url>");
-            }
-        }
-    };
-    AppComponent.prototype.getAuthResponse = function () {
-        var authResponse = this.fb.getAuthResponse();
-        this.value = authResponse;
-        console.log(authResponse);
-    };
-    AppComponent.prototype.getUser = function () {
-        var _this = this;
-        this.fb.api("me?access_token=" + this.accesstoken).then(function (value) { _this.value = value; console.log(value); }).catch(function (error) { return _this.value = error; });
+    ;
+    AppComponent.prototype.getCaptive = function () {
     };
     return AppComponent;
 }());
@@ -92,9 +43,12 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
         templateUrl: './app.component.html',
-        styleUrls: ['./app.component.css']
+        styleUrls: ['./app.component.css'],
     }),
-    __metadata("design:paramtypes", [ngx_facebook_1.FacebookService, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.ActivatedRoute,
+        router_1.Router,
+        http_service_1.HttpService,
+        captive_store_1.CaptiveStore])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

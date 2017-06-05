@@ -8,10 +8,15 @@ import {RegisterFormComponent} from "./form/register.form";
 import {MyOwnCustomMaterialModule} from "./material.module";
 import {WelcomeComponent} from "./welcome.component";
 import {PageNotFoundComponent} from "./page-not-found.component";
+import {HttpService} from "./service/http.service";
+import {HttpModule} from "@angular/http";
+import {ValidateFormComponent} from "./form/validate.form";
+import {CaptiveStore} from "./service/captive.store";
 
 @NgModule({
     imports: [
         BrowserModule,
+        HttpModule,
         ReactiveFormsModule,
         RouterModule.forRoot([
             {
@@ -22,6 +27,9 @@ import {PageNotFoundComponent} from "./page-not-found.component";
                 path:':client/form',component:RegisterFormComponent,
             },
             {
+                path:':client/validate',component:ValidateFormComponent,
+            },
+            {
                 path:'**',component:PageNotFoundComponent,
             },
         ]),
@@ -29,8 +37,12 @@ import {PageNotFoundComponent} from "./page-not-found.component";
         MyOwnCustomMaterialModule
     ],
     declarations: [
-        AppComponent,RegisterFormComponent,WelcomeComponent,PageNotFoundComponent
+        AppComponent,
+        RegisterFormComponent,ValidateFormComponent,
+        WelcomeComponent,
+        PageNotFoundComponent
     ],
+    providers:[HttpService,CaptiveStore],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

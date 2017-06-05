@@ -11,11 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var http_service_1 = require("./service/http.service");
+var captive_store_1 = require("./service/captive.store");
 var WelcomeComponent = (function () {
-    function WelcomeComponent(route, router) {
+    function WelcomeComponent(httpService, route, router, captiveStore) {
         var _this = this;
+        this.httpService = httpService;
         this.route = route;
         this.router = router;
+        this.captiveStore = captiveStore;
+        this.accepted = true;
+        console.log("constructor captive=" + this.captive);
+        this.subscription = captiveStore.captive.subscribe(function (captive) { _this.captive = captive; console.log(captive); });
         this.route.params.subscribe(function (param) {
             if (param['client']) {
                 _this.client = param['client'];
@@ -25,8 +32,15 @@ var WelcomeComponent = (function () {
             }
         });
     }
+    WelcomeComponent.prototype.ngOnInit = function () {
+        console.log("init welcome=" + this.captive);
+    };
+    WelcomeComponent.prototype.ngOnDestroy = function () {
+        console.log("destroy welcome=" + this.captive);
+        this.subscription.unsubscribe();
+    };
     WelcomeComponent.prototype.gotoForm = function () {
-        this.router.navigate(['form']);
+        this.router.navigate([this.client + '/form']);
     };
     return WelcomeComponent;
 }());
@@ -36,7 +50,10 @@ WelcomeComponent = __decorate([
         templateUrl: "welcome.component.html",
         styleUrls: ['./welcome.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router])
+    __metadata("design:paramtypes", [http_service_1.HttpService,
+        router_1.ActivatedRoute,
+        router_1.Router,
+        captive_store_1.CaptiveStore])
 ], WelcomeComponent);
 exports.WelcomeComponent = WelcomeComponent;
 //# sourceMappingURL=welcome.component.js.map

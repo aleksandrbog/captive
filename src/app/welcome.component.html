@@ -1,16 +1,20 @@
-<div class="flex-container">
+{{errorMessage}}
+<div class="flex-container" *ngIf="captive">
     <div class="flex-item">
-        image
+        <img style="width: 250px"
+             src="https://s3.amazonaws.com/unity-wifi-images/{{client}}-logo.png">
     </div>
     <div class="flex-item">
-        welcome text
+        {{captive.welcome}}
     </div>
     <div class="flex-item">
-        <button md-raised-button (click)="gotoForm()"> Log In with Form </button>
-        <button md-raised-button (click)="loginWithFacebook()"> Log In with Facebook </button>
-        <button md-raised-button (click)="loginWithFacebook()"> Log In with Instagram </button>
+        <div class="flex-container">
+            <button md-raised-button (click)="gotoForm()" [disabled]="!accepted"> Log In with Form </button>
+            <button md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted"> Log In with Facebook </button>
+            <button md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted"> Log In with Instagram </button>
+        </div>
     </div>
     <div class="flex-item">
-        footer
+        <input type="checkbox" [checked]="accepted" (change)="accepted = !accepted"> I agree to the Terms and Conditions
     </div>
 </div>

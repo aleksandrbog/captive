@@ -1,0 +1,15 @@
+<div style="background-color: whitesmoke">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <label for="code">code</label>
+        <input id="code" formControlName="code" >
+        <div>
+            <button md-raised-button type="submit">
+                Submit
+            </button>
+            <button md-raised-button type="button" (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+</div>

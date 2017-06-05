@@ -16,6 +16,10 @@ var register_form_1 = require("./form/register.form");
 var material_module_1 = require("./material.module");
 var welcome_component_1 = require("./welcome.component");
 var page_not_found_component_1 = require("./page-not-found.component");
+var http_service_1 = require("./service/http.service");
+var http_1 = require("@angular/http");
+var validate_form_1 = require("./form/validate.form");
+var captive_store_1 = require("./service/captive.store");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -25,6 +29,7 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [
             platform_browser_1.BrowserModule,
+            http_1.HttpModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
                 {
@@ -34,6 +39,9 @@ AppModule = __decorate([
                     path: ':client/form', component: register_form_1.RegisterFormComponent,
                 },
                 {
+                    path: ':client/validate', component: validate_form_1.ValidateFormComponent,
+                },
+                {
                     path: '**', component: page_not_found_component_1.PageNotFoundComponent,
                 },
             ]),
@@ -41,8 +49,12 @@ AppModule = __decorate([
             material_module_1.MyOwnCustomMaterialModule
         ],
         declarations: [
-            app_component_1.AppComponent, register_form_1.RegisterFormComponent, welcome_component_1.WelcomeComponent, page_not_found_component_1.PageNotFoundComponent
+            app_component_1.AppComponent,
+            register_form_1.RegisterFormComponent, validate_form_1.ValidateFormComponent,
+            welcome_component_1.WelcomeComponent,
+            page_not_found_component_1.PageNotFoundComponent
         ],
+        providers: [http_service_1.HttpService, captive_store_1.CaptiveStore],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

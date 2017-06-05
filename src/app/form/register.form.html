@@ -1,11 +1,37 @@
-<form [formGroup]="form">
-    <div class="form-group">
-        <input placeholder="First Name" formControlName="first">
-    </div>
-    <div class="form-group">
-        <input placeholder="Last Name"  formControlName="last">
-    </div>
-    <div  class="form-group">
-        <button type="submit"> Submit form</button>
-    </div>
-</form>
+<div class="flex-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <md-card>
+            <md-card-content>
+                    <div class="form-group">
+                        <md-input-container>
+                            <input mdInput placeholder="First Name" id="first" formControlName="first">
+                        </md-input-container>
+                    </div>
+                    <div class="form-group">
+                        <md-input-container>
+                            <input mdInput placeholder="Last Name" id="last" formControlName="last">
+                        </md-input-container>
+                    </div>
+                    <div class="form-group">
+                        <md-input-container>
+                            <input mdInput type="date" placeholder="Birthday" id="birthday"  formControlName="birthday">
+                        </md-input-container>
+                    </div>
+                    <div class="form-group">
+                        <md-input-container>
+                            <input mdInput placeholder="Phone" formControlName="phone" id="phone" required>
+                        </md-input-container>
+                    </div>
+                    <div>
+                        <div *ngIf="formErrors.phone">
+                            {{ formErrors.phone }}
+                        </div>
+                    </div>
+            </md-card-content>
+            <md-card-actions>
+                    <button md-raised-button type="submit" [disabled]="form.status==='INVALID'">Submit form</button>
+                    <button md-raised-button type="button" (click)="cancel()">Cancel</button>
+            </md-card-actions>
+        </md-card>
+    </form>
+</div>
