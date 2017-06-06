@@ -1,0 +1,15 @@
+<div class="flex-container">
+    <div class="flex-item">
+        <fb-page href="https://facebook.com/facebook"></fb-page>
+    </div>
+    <div class="flex-item">
+        <md-card *ngIf="user">
+            <md-card-content>
+                Name: {{user.name}}
+            </md-card-content>
+        </md-card>
+    </div>
+    <div class="flex-item">
+        <enable-internet></enable-internet>
+    </div>
+</div>

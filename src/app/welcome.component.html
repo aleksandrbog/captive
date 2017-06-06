@@ -4,17 +4,27 @@
         <img style="width: 250px"
              src="https://s3.amazonaws.com/unity-wifi-images/{{client}}-logo.png">
     </div>
-    <div class="flex-item">
+    <div class="flex-item" [ngStyle]="{'background-color': captive.welcomeBackground,'padding':'10px'}">
         {{captive.welcome}}
     </div>
     <div class="flex-item">
         <div class="flex-container">
-            <button md-raised-button (click)="gotoForm()" [disabled]="!accepted"> Log In with Form </button>
-            <button md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted"> Log In with Facebook </button>
-            <button md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted"> Log In with Instagram </button>
+            <div style="margin-top: 5px">
+                <button style="width: 100%" md-raised-button (click)="gotoForm()" [disabled]="!accepted">
+                    <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                    Log In with Form
+                </button>
+            </div>
+            <div style="margin-top: 5px">
+                <button style="width: 100%" md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                    Log In with Facebook
+                </button>
+            </div>
+            <!--<button md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted"> Log In with Instagram </button>-->
         </div>
     </div>
-    <div class="flex-item">
-        <input type="checkbox" [checked]="accepted" (change)="accepted = !accepted"> I agree to the Terms and Conditions
+    <div class="flex-item" style="background-color:whitesmoke;padding: 10px;">
+        <md-checkbox [checked]="accepted" (change)="accepted = !accepted"> I agree to the Terms and Conditions</md-checkbox>
     </div>
 </div>

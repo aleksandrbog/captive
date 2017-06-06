@@ -12,6 +12,9 @@ import {HttpService} from "./service/http.service";
 import {HttpModule} from "@angular/http";
 import {ValidateFormComponent} from "./form/validate.form";
 import {CaptiveStore} from "./service/captive.store";
+import {FlandComponent} from "./facebook/fland.component";
+import {LandComponent} from "./form/land.component";
+import {EnableInternet} from "./enable-internet.component";
 
 @NgModule({
     imports: [
@@ -30,6 +33,12 @@ import {CaptiveStore} from "./service/captive.store";
                 path:':client/validate',component:ValidateFormComponent,
             },
             {
+                path:':client/fland',component:FlandComponent,
+            },
+            {
+                path:':client/land',component:LandComponent,
+            },
+            {
                 path:'**',component:PageNotFoundComponent,
             },
         ]),
@@ -40,7 +49,7 @@ import {CaptiveStore} from "./service/captive.store";
         AppComponent,
         RegisterFormComponent,ValidateFormComponent,
         WelcomeComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,FlandComponent,LandComponent,EnableInternet
     ],
     providers:[HttpService,CaptiveStore],
     bootstrap: [ AppComponent ]

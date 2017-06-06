@@ -40,6 +40,7 @@ export class ValidateFormComponent implements OnInit{
         //send data to server
 
         //get data, redirect to validate
+        this.router.navigate([this.client+"/land"])
     }
     cancel(){
         this.router.navigate([this.client+"/welcome"]);

@@ -16,8 +16,14 @@ export class HttpService{
        this.getCaptive();
     }
     getCaptive(): Observable<Captive> {
-        let url:string = "https://unity-wifi.net/rest/captive/v2/38";
+        let url:string = "https://unity-wifi.net/rest/captive/v2/37";
         return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+    registerSession(data:any):Observable<any>{
+        let url:string = "http://10.1.77.208:8080/rest/captive/v2/register";
+        return this.http.post(url,data,null)
             .map(this.extractData)
             .catch(this.handleError);
     }

@@ -11,3 +11,4 @@ import 'rxjs';
 // You can import js, ts, css, sass, ...
 //import '../src/assets/js/aws-sdk-2.60.0.min.js'
 import '@angular/material/prebuilt-themes/indigo-pink.css'
+import 'font-awesome-4.7.0/css/font-awesome.min.css'

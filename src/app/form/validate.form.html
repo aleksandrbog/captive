@@ -1,15 +1,17 @@
-<div style="background-color: whitesmoke">
+<md-card>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <label for="code">code</label>
-        <input id="code" formControlName="code" >
-        <div>
+        <md-card-content>
+            <md-input-container>
+                <input mdInput placeholder="Code" id="code" formControlName="code">
+            </md-input-container>
+        </md-card-content>
+        <md-card-actions>
             <button md-raised-button type="submit">
                 Submit
             </button>
             <button md-raised-button type="button" (click)="cancel()">
                 Cancel
             </button>
-        </div>
-
+        </md-card-actions>
     </form>
-</div>
+</md-card>
