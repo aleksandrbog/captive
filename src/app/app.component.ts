@@ -4,6 +4,8 @@ import {FacebookService, InitParams, LoginResponse, AuthResponse, LoginOptions} 
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {HttpService} from "./service/http.service";
 import {CaptiveStore} from "./service/captive.store";
+import {CookieService} from "./service/cookie.service";
+import {error} from "util";
 
 declare var window: any;
 
@@ -22,7 +24,8 @@ export class AppComponent implements  OnInit{
     constructor(private route : ActivatedRoute,
                 private router:Router,
                 private httpService:HttpService,
-                private captiveStore:CaptiveStore
+                private captiveStore:CaptiveStore,
+                private cookieService:CookieService
     ) {
        // this.getCaptive();
         this.client = window.location.pathname.split("/")[1].trim();

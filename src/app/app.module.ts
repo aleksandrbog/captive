@@ -15,6 +15,7 @@ import {CaptiveStore} from "./service/captive.store";
 import {FlandComponent} from "./facebook/fland.component";
 import {LandComponent} from "./form/land.component";
 import {EnableInternet} from "./enable-internet.component";
+import {CookieService} from "./service/cookie.service";
 
 @NgModule({
     imports: [
@@ -51,7 +52,7 @@ import {EnableInternet} from "./enable-internet.component";
         WelcomeComponent,
         PageNotFoundComponent,FlandComponent,LandComponent,EnableInternet
     ],
-    providers:[HttpService,CaptiveStore],
+    providers:[HttpService,CaptiveStore,CookieService],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

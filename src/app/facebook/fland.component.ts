@@ -1,18 +1,29 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {FacebookService, InitParams, LoginOptions} from 'ngx-facebook';
 import {ActivatedRoute, Params} from "@angular/router";
+import {HttpService} from "../service/http.service";
+import {MdSnackBar} from "@angular/material";
+import {CookieService} from "../service/cookie.service";
 
 @Component({
     selector:"fland",
-    templateUrl:"./fland.component.html"
+    templateUrl:"./fland.component.html",
+    styleUrls:["../land.css"]
 })
 export class FlandComponent implements OnInit,OnDestroy{
+    private loading : boolean = true;
     private client: string;
     private access_token: string;
     private mac: string;
     private user:any;
 
-    constructor(private fb: FacebookService,private route:ActivatedRoute){
+    constructor(
+        private fb: FacebookService,
+        private route:ActivatedRoute,
+        private httpService:HttpService,
+        public snackBar: MdSnackBar,
+        private cookieService:CookieService
+    ){
         let initParams: InitParams = {
             appId: '387281471607035',
             xfbml: true,
@@ -59,5 +70,21 @@ export class FlandComponent implements OnInit,OnDestroy{
 
     private postData() {
         console.log(this.mac + " " + this.user + " " + this.client);
+        this.httpService.registerSessionFacebook(this.client,this.user,this.mac)
+            .subscribe(
+                (res:any)=>{
+                    this.loading = false;
+                    console.log(res);
+                    //save session id
+                    this.cookieService.setCookie("session",res.sessionId,1);
+                },
+                (error:any)=>{
+                    this.loading = false;
+                    console.log(error);
+                    this.snackBar.open(error, '', {
+                        duration: 3000
+                    });
+                }
+            )
     }
 }

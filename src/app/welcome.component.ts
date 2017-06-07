@@ -4,6 +4,7 @@ import {HttpService} from "./service/http.service";
 import {Captive} from "./model/captive";
 import {CaptiveStore} from "./service/captive.store";
 import {Subscription} from "rxjs/Subscription";
+import {CookieService} from "./service/cookie.service";
 
 @Component({
     selector:"welcome",
@@ -25,7 +26,8 @@ export class WelcomeComponent implements OnInit,OnDestroy{
         private httpService:HttpService,
         private route : ActivatedRoute,
         private router:Router,
-        private captiveStore:CaptiveStore
+        private captiveStore:CaptiveStore,
+        private cookieService:CookieService
     ){
         console.log("constructor captive=" +this.captive);
 
@@ -48,18 +50,32 @@ export class WelcomeComponent implements OnInit,OnDestroy{
     }
     ngOnInit(): void {
         console.log("init welcome=" +this.captive);
+        let s = this.cookieService.getCookie("session");
+        if(s){
+            this.httpService.getSession(s).subscribe(
+                (res:any) =>{
+                    if(res.type == 0){
+                        this.router.navigate([this.client+"/land"]);
+
+                    }
+                    if(res.type == 1){
+                        this.router.navigate([this.client+"/fland"]);
+                    }
+                },
+                (error:any) =>{console.log("session error="+error)}
+            )
+        }
     }
     ngOnDestroy():void{
         console.log("destroy welcome=" +this.captive);
         this.subscription.unsubscribe();
     }
     gotoForm(){
-        this.router.navigate([this.client+'/form']);
+        this.router.navigate([this.client+'/form'],{ queryParams: { mac: this.mac } });
     }
     loginWithFacebook(){
         window.location.href =
             "https://www.facebook.com/dialog/oauth?client_id=" + this.appid + "&redirect_uri="+this.uri+"&response_type=token&state="+this.mac;
-            //"https://www.facebook.com/dialog/oauth?client_id=387281471607035&scope=email&redirect_uri=http://localhost:8081/"+this.client+"/fland&state=6234";
     }
 
 

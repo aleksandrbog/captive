@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core"
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {PhoneValidator} from "../shared/phone.validator";
+import {HttpService} from "../service/http.service";
+import {MdSnackBar} from "@angular/material";
 
 @Component({
     selector:'register-form',
@@ -10,11 +12,14 @@ import {PhoneValidator} from "../shared/phone.validator";
 export class RegisterFormComponent implements OnInit{
     private form: FormGroup;
     private client:string;
-    private name:string= "";
+    private mac:string;
+    private name:string="";
 
     constructor(private fb:FormBuilder,
                 private router:Router,
-                private route : ActivatedRoute
+                private route : ActivatedRoute,
+                private httpService : HttpService,
+                public snackBar: MdSnackBar
     ){
         this.route.params.subscribe((param:Params)=>{
             if(param['client']){
@@ -22,7 +27,11 @@ export class RegisterFormComponent implements OnInit{
             }else{
                 this.router.navigate(['**']);
             }
+        });
+        this.route.queryParams.subscribe((param:Params)=>{
+            this.mac=param['mac'];
         })
+
         this.createForm();
     }
     ngOnInit(): void {
@@ -31,8 +40,8 @@ export class RegisterFormComponent implements OnInit{
 
     createForm(){
         this.form = this.fb.group({
-            first:[this.name,Validators.required],
-            last:['',Validators.required],
+            firstName:[this.name,Validators.required],
+            lastName:['',Validators.required],
             birthday:['',Validators.required],
             phone:['+971',[
                 Validators.required,
@@ -83,9 +92,19 @@ export class RegisterFormComponent implements OnInit{
         //show loader
 
         //send data to server
-
-        //get data, redirect to validate
-        this.router.navigate([this.client+"/validate"])
+        this.httpService.registerSession(this.form.value,this.client,this.mac).subscribe(
+            (res:any)=>{
+                console.log(res);
+                //correct, redirect to validate
+                this.router.navigate([this.client+"/validate"],{queryParams:{mac:this.mac}})
+            },
+            (error:any)=>{
+                console.log(error);
+                this.snackBar.open(error, '', {
+                    duration: 3000
+                });
+            }
+        )
 
     }
     cancel(){
