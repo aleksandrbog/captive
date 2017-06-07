@@ -8,4 +8,5 @@ require("@angular/http");
 require("@angular/router");
 require("rxjs");
 require("@angular/material/prebuilt-themes/indigo-pink.css");
+require("font-awesome-4.7.0/css/font-awesome.min.css");
 //# sourceMappingURL=vendor.js.map

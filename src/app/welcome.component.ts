@@ -30,10 +30,6 @@ export class WelcomeComponent implements OnInit,OnDestroy{
         private cookieService:CookieService
     ){
         console.log("constructor captive=" +this.captive);
-
-        this.subscription = captiveStore.captive.subscribe(
-            (captive:Captive)=>{this.captive = captive;console.log(captive);}
-        );
         console.log(window.location);
         //if no client, go away
         this.route.params.subscribe((param:Params)=>{
@@ -46,7 +42,10 @@ export class WelcomeComponent implements OnInit,OnDestroy{
         });
         this.route.queryParams.subscribe((param:Params)=>{
             this.mac=param['mac'];
-        })
+        });
+        this.subscription = captiveStore.captive.subscribe(
+            (captive:Captive)=>{this.captive = captive;console.log(captive);}
+        );
     }
     ngOnInit(): void {
         console.log("init welcome=" +this.captive);

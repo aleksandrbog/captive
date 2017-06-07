@@ -1,6 +1,6 @@
 <div class="flex-container">
-    <div class="flex-item">
-        <fb-page href="https://facebook.com/facebook"></fb-page>
+    <div class="flex-item" *ngIf="captive">
+        <fb-page href="{{captive.facebook.page_url}}"></fb-page>
     </div>
     <div class="flex-item">
         <md-card *ngIf="user">

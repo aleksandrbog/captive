@@ -16,8 +16,10 @@ var MyOwnCustomMaterialModule = (function () {
 }());
 MyOwnCustomMaterialModule = __decorate([
     core_1.NgModule({
-        imports: [material_1.MdButtonModule, material_1.MdCheckboxModule, animations_1.BrowserAnimationsModule, material_1.MdInputModule, material_1.MdCardModule],
-        exports: [material_1.MdButtonModule, material_1.MdCheckboxModule, animations_1.BrowserAnimationsModule, material_1.MdInputModule, material_1.MdCardModule],
+        imports: [material_1.MdButtonModule, material_1.MdCheckboxModule, animations_1.BrowserAnimationsModule, material_1.MdInputModule, material_1.MdCardModule,
+            material_1.MdProgressSpinnerModule, material_1.MdSnackBarModule],
+        exports: [material_1.MdButtonModule, material_1.MdCheckboxModule, animations_1.BrowserAnimationsModule, material_1.MdInputModule, material_1.MdCardModule,
+            material_1.MdProgressSpinnerModule, material_1.MdSnackBarModule],
     })
 ], MyOwnCustomMaterialModule);
 exports.MyOwnCustomMaterialModule = MyOwnCustomMaterialModule;

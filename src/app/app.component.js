@@ -14,18 +14,22 @@ require("../assets/css/styles.css");
 var router_1 = require("@angular/router");
 var http_service_1 = require("./service/http.service");
 var captive_store_1 = require("./service/captive.store");
+var cookie_service_1 = require("./service/cookie.service");
 var AppComponent = (function () {
-    function AppComponent(route, router, httpService, captiveStore) {
+    function AppComponent(route, router, httpService, captiveStore, cookieService) {
+        var _this = this;
         this.route = route;
         this.router = router;
         this.httpService = httpService;
         this.captiveStore = captiveStore;
+        this.cookieService = cookieService;
         this.client = window.location.pathname.split("/")[1].trim();
         this.resolution = window.screen.availHeight + 'x' + window.screen.availWidth;
         this.route.queryParams.subscribe(function (params) {
             console.log(params);
         });
         this.postClientInfo();
+        captiveStore.captive.subscribe(function (captive) { _this.captive = captive; console.log(captive); });
     }
     AppComponent.prototype.ngOnInit = function () {
     };
@@ -35,8 +39,6 @@ var AppComponent = (function () {
         console.log(navigator.userAgent);
     };
     ;
-    AppComponent.prototype.getCaptive = function () {
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -48,7 +50,8 @@ AppComponent = __decorate([
     __metadata("design:paramtypes", [router_1.ActivatedRoute,
         router_1.Router,
         http_service_1.HttpService,
-        captive_store_1.CaptiveStore])
+        captive_store_1.CaptiveStore,
+        cookie_service_1.CookieService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

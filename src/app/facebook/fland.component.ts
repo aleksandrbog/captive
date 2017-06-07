@@ -4,6 +4,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {HttpService} from "../service/http.service";
 import {MdSnackBar} from "@angular/material";
 import {CookieService} from "../service/cookie.service";
+declare var window: any;
 
 @Component({
     selector:"fland",
@@ -16,6 +17,7 @@ export class FlandComponent implements OnInit,OnDestroy{
     private access_token: string;
     private mac: string;
     private user:any;
+    private captive:any;
 
     constructor(
         private fb: FacebookService,
@@ -30,7 +32,6 @@ export class FlandComponent implements OnInit,OnDestroy{
             version: 'v2.9'
         };
 
-        fb.init(initParams);
         this.route.params.subscribe((param:Params)=>{
                 this.client = param['client'];
         });
@@ -46,14 +47,22 @@ export class FlandComponent implements OnInit,OnDestroy{
                 }
             })
         }
+        this.httpService.getCaptive(this.client).subscribe(
+            res=>{this.captive=res;
+            fb.init(initParams);
+                this.fb.api('/me?access_token='+this.access_token)
+                    .then(user => {
+                        this.user = user;
+                        //post data to check
+                        this.postData();
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        // this.cookieService.deleteCookie("session");window.location.href="google.com";
+                    });
 
-        this.fb.api('/me?access_token='+this.access_token)
-                .then(user => {
-                    this.user = user;
-                    //post data to check
-                    this.postData();
-                })
-                .catch(e => console.log(e));
+            }
+        )
 
         const params: any = {
             access_token: this.access_token
@@ -63,6 +72,7 @@ export class FlandComponent implements OnInit,OnDestroy{
     ngOnInit(): void {
         console.log(decodeURI(this.mac));
         console.log(this.user);
+        window.FB.XFBML.parse();
     }
 
     ngOnDestroy(): void {

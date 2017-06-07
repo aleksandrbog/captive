@@ -2,20 +2,20 @@
 <div class="flex-container" *ngIf="captive">
     <div class="flex-item">
         <img style="width: 250px"
-             src="https://s3.amazonaws.com/unity-wifi-images/{{client}}-logo.png">
+             src="https://d18ze3lf846t16.cloudfront.net/{{captive.logo}}">
     </div>
     <div class="flex-item" [ngStyle]="{'background-color': captive.welcomeBackground,'padding':'10px'}">
         {{captive.welcome}}
     </div>
     <div class="flex-item">
         <div class="flex-container">
-            <div style="margin-top: 5px">
+            <div style="margin-top: 5px" *ngIf="captive.form">
                 <button style="width: 100%" md-raised-button (click)="gotoForm()" [disabled]="!accepted">
                     <i class="fa fa-keyboard-o" aria-hidden="true"></i>
                     Log In with Form
                 </button>
             </div>
-            <div style="margin-top: 5px">
+            <div style="margin-top: 5px" *ngIf="captive.facebook">
                 <button style="width: 100%" md-raised-button (click)="loginWithFacebook()" [disabled]="!accepted">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                     Log In with Facebook

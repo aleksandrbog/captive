@@ -1,3 +1,3 @@
-<main class="flex-container"  [ngStyle]="{'background-image': 'url(http://unity-wifi-images.s3-website-us-east-1.amazonaws.com/' + resolution + '/'+client+'-background.jpg)'}">
+<main class="flex-container" *ngIf="captive" [ngStyle]="{'background-image': 'url(https://d18ze3lf846t16.cloudfront.net/' + resolution + '/'+captive.background_image+')','background-size':'cover'}">
     <router-outlet></router-outlet>
 </main>

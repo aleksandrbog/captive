@@ -13,12 +13,16 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var phone_validator_1 = require("../shared/phone.validator");
+var http_service_1 = require("../service/http.service");
+var material_1 = require("@angular/material");
 var RegisterFormComponent = (function () {
-    function RegisterFormComponent(fb, router, route) {
+    function RegisterFormComponent(fb, router, route, httpService, snackBar) {
         var _this = this;
         this.fb = fb;
         this.router = router;
         this.route = route;
+        this.httpService = httpService;
+        this.snackBar = snackBar;
         this.name = "";
         this.formErrors = {
             'name': '',
@@ -46,6 +50,9 @@ var RegisterFormComponent = (function () {
                 _this.router.navigate(['**']);
             }
         });
+        this.route.queryParams.subscribe(function (param) {
+            _this.mac = param['mac'];
+        });
         this.createForm();
     }
     RegisterFormComponent.prototype.ngOnInit = function () {
@@ -53,8 +60,8 @@ var RegisterFormComponent = (function () {
     RegisterFormComponent.prototype.createForm = function () {
         var _this = this;
         this.form = this.fb.group({
-            first: [this.name, forms_1.Validators.required],
-            last: ['', forms_1.Validators.required],
+            firstName: [this.name, forms_1.Validators.required],
+            lastName: ['', forms_1.Validators.required],
             birthday: ['', forms_1.Validators.required],
             phone: ['+971', [
                     forms_1.Validators.required,
@@ -85,8 +92,17 @@ var RegisterFormComponent = (function () {
         }
     };
     RegisterFormComponent.prototype.onSubmit = function () {
+        var _this = this;
         console.log(this.form.value);
-        this.router.navigate([this.client + "/validate"]);
+        this.httpService.registerSession(this.form.value, this.client, this.mac).subscribe(function (res) {
+            console.log(res);
+            _this.router.navigate([_this.client + "/validate"], { queryParams: { mac: _this.mac } });
+        }, function (error) {
+            console.log(error);
+            _this.snackBar.open(error, '', {
+                duration: 3000
+            });
+        });
     };
     RegisterFormComponent.prototype.cancel = function () {
         this.router.navigate([this.client + "/welcome"]);
@@ -100,7 +116,9 @@ RegisterFormComponent = __decorate([
     }),
     __metadata("design:paramtypes", [forms_1.FormBuilder,
         router_1.Router,
-        router_1.ActivatedRoute])
+        router_1.ActivatedRoute,
+        http_service_1.HttpService,
+        material_1.MdSnackBar])
 ], RegisterFormComponent);
 exports.RegisterFormComponent = RegisterFormComponent;
 //# sourceMappingURL=register.form.js.map

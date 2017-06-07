@@ -6,6 +6,7 @@ import {HttpService} from "./service/http.service";
 import {CaptiveStore} from "./service/captive.store";
 import {CookieService} from "./service/cookie.service";
 import {error} from "util";
+import {Captive} from "./model/captive";
 
 declare var window: any;
 
@@ -18,6 +19,7 @@ declare var window: any;
 export class AppComponent implements  OnInit{
     ngOnInit(): void {
     }
+    private captive:any;
     private client:string;
     private resolution:string;
     private errorMessage:string;
@@ -34,6 +36,9 @@ export class AppComponent implements  OnInit{
             console.log(params);
         });
         this.postClientInfo();
+        captiveStore.captive.subscribe(
+            (captive:Captive)=>{this.captive = captive;console.log(captive);}
+        );
     }
     /*Method post client info to database*/
     postClientInfo(){
@@ -41,7 +46,4 @@ export class AppComponent implements  OnInit{
         console.log(window.screen.availHeight +' '+ window.screen.availWidth);
         console.log(navigator.userAgent);
     };
-    getCaptive() {
-
-    }
 }

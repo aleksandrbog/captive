@@ -20,6 +20,10 @@ var http_service_1 = require("./service/http.service");
 var http_1 = require("@angular/http");
 var validate_form_1 = require("./form/validate.form");
 var captive_store_1 = require("./service/captive.store");
+var fland_component_1 = require("./facebook/fland.component");
+var land_component_1 = require("./form/land.component");
+var enable_internet_component_1 = require("./enable-internet.component");
+var cookie_service_1 = require("./service/cookie.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -42,6 +46,12 @@ AppModule = __decorate([
                     path: ':client/validate', component: validate_form_1.ValidateFormComponent,
                 },
                 {
+                    path: ':client/fland', component: fland_component_1.FlandComponent,
+                },
+                {
+                    path: ':client/land', component: land_component_1.LandComponent,
+                },
+                {
                     path: '**', component: page_not_found_component_1.PageNotFoundComponent,
                 },
             ]),
@@ -52,9 +62,9 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             register_form_1.RegisterFormComponent, validate_form_1.ValidateFormComponent,
             welcome_component_1.WelcomeComponent,
-            page_not_found_component_1.PageNotFoundComponent
+            page_not_found_component_1.PageNotFoundComponent, fland_component_1.FlandComponent, land_component_1.LandComponent, enable_internet_component_1.EnableInternet
         ],
-        providers: [http_service_1.HttpService, captive_store_1.CaptiveStore],
+        providers: [http_service_1.HttpService, captive_store_1.CaptiveStore, cookie_service_1.CookieService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
